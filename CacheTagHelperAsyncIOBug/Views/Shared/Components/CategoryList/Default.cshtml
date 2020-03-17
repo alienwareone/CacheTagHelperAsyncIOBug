@@ -1,0 +1,29 @@
+﻿@model CategoryListViewModel
+
+<cache expires-after="@TimeSpan.FromMinutes(1)">
+    @{
+        async Task RenderCategories(IEnumerable<Category> categories)
+        {
+            if (categories.Any())
+            {
+                <ul>
+                    @foreach (var category in categories)
+                    {
+                        var children = await Model.ChildrenSelectorAsync(category.Id);
+                        <li>
+                            <span>@category.Name</span>
+                            @if (children.Any())
+                            {
+                                await RenderCategories(children);
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    }
+
+    <div>@DateTime.Now</div>
+
+    @{await RenderCategories(Model.TopLevelCategories);}
+</cache>

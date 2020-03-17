@@ -1,0 +1,9 @@
+﻿<div id="categories-container"></div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+@* Doen't Work: Action Call -> return ViewComponent()*@
+<script>
+    $('#categories-container').load('@Url.Action("Categories")');
+</script>
+
+@* Works: Direct Component Call*@
+@(await Component.InvokeAsync<CategoryListViewComponent>())
